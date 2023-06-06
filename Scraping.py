@@ -50,7 +50,7 @@ def write_book_to_file(sub_url, book,lang):
             tt = [verses.text.replace(u'\xa0', u' ').replace('\n',' ') for verses in ch1.find_all('span',attrs={'class':'verse'})]
             chapter = open("Scrapped/"+lang+book[i]+"/"+str(ch) + ".txt", 'w')
             for item in tt:
-                chapter.write("{}\n".format(item))
+                chapter.write(f"{item}\n")
 
 
 write_book_to_file(TI_URL, am_books,"Tigrigna/")
@@ -61,11 +61,7 @@ write_book_to_file(EN_URL, en_books,"English/")
 
 
 def merge_books(lang, books):
-    file_lang = []
-    for bk in books:
-        file_lang.append((glob("Scrapped/"+lang+"/" + bk + "/*.txt")))
-
-    
+    file_lang = [glob("Scrapped/"+lang+"/" + bk + "/*.txt") for bk in books]
     with open("Scrapped/"+lang+"/All.txt","wb") as write_file:
         for f in file_lang:
             for i in f:
